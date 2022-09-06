@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom'
 import { IFullUser } from '../../models/IUser'
 import { setLevelAndPage } from '../../store/reducers/ActionCreaters'
 import { userSlice } from '../../store/reducers/UserSlice'
+import { isUndefined } from 'util'
+import { getRandomNumber } from '../games/Games'
 
 
 const localPage = localStorage.getItem('page') || '0';
@@ -31,12 +33,25 @@ export const BookContainer = () => {
   const setPage = wordSlice.actions.setPage
   const setGroup = wordSlice.actions.setGroup
   const { data: words, error, isLoading } = postAPI.useGetWordsQuery({ page, group })
+  // const { words, isLoading } = useAppSelector((state) => state.levelSlice)
   const user = useAppSelector((state) => state.userSlice) as IFullUser
   const [arr, setArr] = useState([])
   const [render, setRender] = useState(false);
   const addWords = userSlice.actions.addUserWords;
+  const [loading, setLoading] = useState(false);
+
+
+  // useEffect(() => {
+  //   dispatch(setLevelAndPage({ group, page }))
+  // }, [])
+
+  // useEffect(() => {
+  //   dispatch(setLevelAndPage({ group, page }))
+  // }, [page, group])
 
   const uploadWordsUser: any = useCallback(async (object: {wordId: string, name: string, value: string, wordName: string}, token: string) => {
+    setLoading(true);
+        console.log(loading);
     try{
         const res = await fetch('https://rs-lang-back-diffickmenlogo.herokuapp.com/updateWord', {
             method: 'POST',
@@ -69,15 +84,20 @@ export const BookContainer = () => {
         })
         setArr(arrUser)
     }catch(error){
+        setLoading(false);
         console.log(error);
     }
+    setTimeout(() => {setLoading(false); console.log(loading)});
   }, []);
+  // loading, setLoading
+  // useEffect(() => {
+  //   console.log(loading);
+  // },[loading])
 
   useEffect(() => {
-    // setRender(false);
-    if (user.token) {
+    if (user.token || user.userWords.length !== 0) {
       const arrUser: any = words?.map((word) => {
-        const foundWord = user.userWords.find((wordUser: any) => `${wordUser._id}` === `${word._id}`)
+        const foundWord = user?.userWords.find((wordUser: any) => `${wordUser._id}` === `${word._id}`)
         if (foundWord) {
           return (word = {
             ...word,
@@ -100,8 +120,6 @@ export const BookContainer = () => {
     }
     // console.log(arrUser)
   }, [words])
-  console.log(arr);
-  console.log(user.userWords);
   return (
     <div className='wrapper'>
       <div className='game-btn__container'>
@@ -119,6 +137,7 @@ export const BookContainer = () => {
       <div className={user.token ? 'btn-difficult-con' : 'btn-difficult-block'}>
         <Link to='/book/difficult' className={user.settings.difficultWord ? 'btn-difficult' : 'btn-difficult-block'}>Сложные слова</Link>
       </div>
+          {isLoading && <h1>Loading...</h1> }
       {/* <div>
         <Link to='/book/level'>Level A1</Link>
       </div> */}

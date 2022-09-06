@@ -27,6 +27,7 @@ export function SignIn() {
             dispatch(setUser(response.data));
             localStorage.setItem('user', JSON.stringify(response));
             alert(response.data.message);
+            window.location.href = '/';
         }else{
             alert(response.error.data.message);
 

@@ -91,7 +91,7 @@ export const Cards = ({word}: ElItemProps) => {
 
   return (
     <div>
-        <Card sx={{ height: '500px'}}>
+        <Card sx={{ height: '550px'}}>
         <CardMedia
           component="img"
           height="140"
@@ -107,8 +107,12 @@ export const Cards = ({word}: ElItemProps) => {
           </Button>
         </CardActions>
         <CardContent>
+          <div>
+            Правильно:{word.correct} <br />
+            Ошибок: {word.fail}
+          </div>
           <Typography gutterBottom variant="h5" component="div">
-            {word.word}/ {word.transcription} / {word.group} / {word.page} / {word.fail}
+            {word.word}/ {word.transcription}
             <Sound onClick={() => {soundAudio.play(); setTimeout(() => soundAudio1.play(), 800); setTimeout(() => soundAudio2.play(), 6000) }} className='sound-icon'/>
           </Typography>
           <Typography gutterBottom variant="h5" component="div" color="rgb(136, 136, 136)">

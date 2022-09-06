@@ -15,6 +15,7 @@ import { ReactComponent as Star } from '../../assets/star2.svg'
 import { ReactComponent as Delete } from '../../assets/delete.svg'
 import { useDispatch } from 'react-redux';
 import { userSlice } from '../../store/reducers/UserSlice';
+import { wordSlice } from '../../store/reducers/WordSlice';
 
 
 interface ElItemProps {
@@ -112,9 +113,6 @@ export const Book = ({word, arr, render, setRender, uploadWordsUser}: ElItemProp
     }
     await uploadWordsUser(body, user.token)
   }
-  if (word.word === 'alcohol') {
-    console.log(word);
-  }
   return (
     <div>
       <Card sx={{ height: '500px'}}>
@@ -124,7 +122,7 @@ export const Book = ({word, arr, render, setRender, uploadWordsUser}: ElItemProp
           image={`https://rs-lang-back-diffickmenlogo.herokuapp.com/${word.image}`}
           alt="green iguana"
         />
-        <div className={word.correct === 3 || learn === true ? 'learn-true' : 'learn-false'}>
+        <div className={learn === true || word.correct === 3 ? 'learn-true' : 'learn-false'}>
             Правильно: {word.correct} <br/>
             Ошибок: {word.fail}
         </div>
@@ -154,21 +152,21 @@ export const Book = ({word, arr, render, setRender, uploadWordsUser}: ElItemProp
                                         data-word-name={word.word}
                                         id={word._id}
                                         value='true'
-                                        className={word.correct === 3 || learn === true  ? 'bg-false' : 'bg-true'}>
-              Изучено
+                                        className={word.correct === 0 ? 'bg-true' : 'bg-false'}>
+              Изучено {word.correct}
             </button>
             <button onClick={updateWordDel} data-name="deleted"
                                         data-word-name={word.word}
                                         id={word._id}
                                         value='true'
-                                        className={word.correct === 3 || learn === true ? 'learn-true-btn' : 'learn-false-btn'}>
+                                        className={learn === true || word.correct === 3 ? 'learn-true-btn' : 'learn-false-btn'}>
               Удалить слово из изучено
             </button>
           </div>
         </CardActions>
         <div></div>
         {/* className={word.correct === 3 || learn === true ? 'bg-card-color' : 'bg-card'} */}
-        <CardContent>
+        <CardContent className={word.correct === 3 ? 'bg-card-color' : 'bg-card'}>
           <Typography gutterBottom variant="h5" component="div">
             {word.word}/ {word.transcription}
             <Sound onClick={() => {soundAudio.play(); setTimeout(() => soundAudio1.play(), 800); setTimeout(() => soundAudio2.play(), 6000) }} className='sound-icon'/>
