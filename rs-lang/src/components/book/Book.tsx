@@ -144,8 +144,8 @@ export const Book = ({word, arr, render, setRender, uploadWordsUser}: ElItemProp
                                         data-word-name={word.word}
                                         id={word._id}
                                         value={`${difficult}`}
-                                        className='star-btn'>
-            <Star width='40px' height='40px' fill={word.difficult === true || word.fail === 1 || color === 'yellow' ? 'yellow' : '#000'}></Star>
+                                        className={user.settings.difficultWord ? 'star-block' : 'star-none'}>
+            <Star width='40px' height='40px' fill={word.difficult === true || word.fail === 1 || color === 'yellow' ? 'yellow' : '#000'} className={user.settings.difficultWord ? 'star-block' : 'star-none'}></Star>
           </button>
           <div>
             <button onClick={updateWordLearn} data-name="difficult"
@@ -153,7 +153,7 @@ export const Book = ({word, arr, render, setRender, uploadWordsUser}: ElItemProp
                                         id={word._id}
                                         value='true'
                                         className={word.correct === 0 ? 'bg-true' : 'bg-false'}>
-              Изучено {word.correct}
+              Изучено
             </button>
             <button onClick={updateWordDel} data-name="deleted"
                                         data-word-name={word.word}
