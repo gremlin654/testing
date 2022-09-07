@@ -4,9 +4,9 @@ import { Button, Card, CardActions, CardContent, CircularProgress, LinearProgres
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Howl, Howler } from 'howler'
-import FailSound from '../../assets/sound/fail.mp3'
-import FonSound from '../../assets/sound/fon.mp3'
-import SuccessSound from '../../assets/sound/success.mp3'
+import FailSound from '../../assets/fail.mp3'
+import FonSound from '../../assets/fon.mp3'
+import SuccessSound from '../../assets/success.mp3'
 import { IWord } from '../../models/IWord'
 import { getRandomNumber } from './Games'
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
@@ -63,9 +63,9 @@ export const Sprint = () => {
   const multiSeriesContainer = useRef() as MutableRefObject<HTMLDivElement>
   const timer = useRef<string | number | undefined | ReturnType<typeof setInterval>>()
 
-  const audioSuccess = useMemo(() => createSound(SuccessSound, soundVolume), [soundVolume])
-  const audioFail = useMemo(() => createSound(FailSound, soundVolume), [soundVolume])
-  const audioFon = useMemo(() => createSound(FonSound, musicVolume * 0.1, 1, true), [musicVolume])
+  const audioSuccess = useMemo(() => createSound('./audio/success.mp3', soundVolume), [soundVolume])
+  const audioFail = useMemo(() => createSound('./audio/fail.mp3', soundVolume), [soundVolume])
+  const audioFon = useMemo(() => createSound('./audio/fon.mp3', musicVolume * 0.1, 1, true), [musicVolume])
 
   const playWords = useCallback(() => {
     setWordsArray(words)
@@ -125,7 +125,6 @@ export const Sprint = () => {
     [audioFail, audioSuccess, currentRussianWord, currentSeries, currentWord, endGame],
   )
 
-  console.log(allSeries)
   useEffect(() => {
     if (wordsArray.length && currentNumber < wordsArray.length) {
       setCurrentWord(wordsArray[currentNumber])

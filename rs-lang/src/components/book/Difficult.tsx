@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux'
 import { IFullUser } from '../../models/IUser'
 import { IUserWord } from '../../models/IWord'
 import { userSlice } from '../../store/reducers/UserSlice'
+import { levelSlice } from '../../store/reducers/WordGroupSlice'
 import { Cards } from './Cards'
 
 export const Difficult = () => {
+  const { setDifficultWords } = levelSlice.actions
   const dispatch = useDispatch()
   const user = useAppSelector((state) => state.userSlice) as IFullUser
   const [filter, setFilter] = useState([])
@@ -35,6 +38,18 @@ export const Difficult = () => {
   // console.log(filter);
   return (
     <div className='wrapper'>
+      <div className='game-btn__container'>
+        <button className='game__btn'>
+          <Link to='/games/sprint' onClick={() => dispatch(setDifficultWords(filter))}>
+            Спринт
+          </Link>
+        </button>
+        <button className='game__btn'>
+          <Link to='/games/audio_chalenge' onClick={() => dispatch(setDifficultWords(filter))}>
+            Аудиовызов
+          </Link>
+        </button>
+      </div>
       <h2>Сложные слова</h2>
       <div className='cards-container'>
         {/* {wordsUser && wordsUser.map((word: any) => 

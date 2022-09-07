@@ -1,6 +1,6 @@
 import { IFullUser, ISettings, IStatistics, IUser } from './../../models/IUser'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUserWord } from '../../models/IWord';
+import { IUserWord } from '../../models/IWord'
 
 const initialState = localStorage.getItem('user')
   ? JSON.parse(localStorage.getItem('user') || '{}')?.data
@@ -11,9 +11,9 @@ const initialState = localStorage.getItem('user')
       userEmail: '',
       avatarURL: '',
       settings: {
-        soundVolume: 0,
-        musicVolume: 0,
-        wordVolume: 0.5,
+        soundVolume: 50,
+        musicVolume: 50,
+        wordVolume: 50,
         difficultWord: true,
         deleteWord: true,
         translateWord: true,
@@ -100,8 +100,8 @@ export const userSlice = createSlice({
     },
     addUserWords: (state, action: PayloadAction<IUserWord>) => {
       state.userWords = action.payload
-      localStorage.setItem('user', JSON.stringify({data: state}));
-  }
+      localStorage.setItem('user', JSON.stringify({ data: state }))
+    },
   },
 })
 

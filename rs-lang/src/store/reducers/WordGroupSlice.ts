@@ -38,12 +38,22 @@ export const levelSlice = createSlice({
     setActiveWords(state, action: PayloadAction<[]>) {
       state.activeWords = action.payload
     },
+    setDifficultWords(state, action) {
+      state.words = action.payload
+    },
   },
   extraReducers: {
     [setLevelAndPage.fulfilled.type]: (state, action) => {
       state.words = action.payload
       state.isLoading = false
       state.error = ''
+    },
+    [setLevelAndPage.pending.type]: (state) => {
+      state.isLoading = true
+    },
+    [setLevelAndPage.rejected.type]: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
     },
     [setLevelAndPage.pending.type]: (state) => {
       state.isLoading = true

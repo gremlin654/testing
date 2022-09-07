@@ -56,7 +56,7 @@
   transition: 0.3s;
   background: rgba(233, 214, 255, 0.8235294118);
   color: #9b6ad6;
-} 
+}
 .btn-difficult-block {
   display: none;
 }
@@ -97,17 +97,17 @@
 .bg-true {
   display: block;
   background-color: #9b6ad6;
-    font-size: 1.5rem;
-    min-width: 130px;
-    height: 50px;
-    margin: 0;
-    padding: 5px;
-    transform: scale(1);
-    transition: all 0.5s ease 0s;
-    border-radius: 4px;
-    text-transform: uppercase;
-    color:#fff;
-    margin-left: 15px;
+  font-size: 1.5rem;
+  min-width: 130px;
+  height: 50px;
+  margin: 0;
+  padding: 5px;
+  transform: scale(1);
+  transition: all 0.5s ease 0s;
+  border-radius: 4px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-left: 15px;
 }
 .bg-false {
   display: none;
@@ -115,33 +115,33 @@
 .learn-true-btn {
   display: block;
   background-color: #9b6ad6;
-    font-size: 1.5rem;
-    min-width: 130px;
-    height: 50px;
-    margin: 0;
-    padding: 5px;
-    transform: scale(1);
-    transition: all 0.5s ease 0s;
-    border-radius: 4px;
-    text-transform: uppercase;
-    color:#fff;
-    margin-left: 15px;
+  font-size: 1.5rem;
+  min-width: 130px;
+  height: 50px;
+  margin: 0;
+  padding: 5px;
+  transform: scale(1);
+  transition: all 0.5s ease 0s;
+  border-radius: 4px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-left: 15px;
 }
 .learn-false-btn {
   display: none;
 }
 .game-btn {
   background-color: #9b6ad6;
-    font-size: 1.5rem;
-    min-width: 150px;
-    height: 50px;
-    margin: 0;
-    padding: 5px;
-    transform: scale(1);
-    transition: all 0.5s ease 0s;
-    border-radius: 4px;
-    text-transform: uppercase;
-    color:#fff;
+  font-size: 1.5rem;
+  min-width: 150px;
+  height: 50px;
+  margin: 0;
+  padding: 5px;
+  transform: scale(1);
+  transition: all 0.5s ease 0s;
+  border-radius: 4px;
+  text-transform: uppercase;
+  color: #fff;
   display: flex;
   justify-content: center;
 }
@@ -169,5 +169,12 @@
   background-color: #ba8df1bd;
 }
 .bg-card {
+  background-color: #fff;
+}
+.star-none {
+  display: none;
+}
+.star-block {
+  display: block;
   background-color: #fff;
 }

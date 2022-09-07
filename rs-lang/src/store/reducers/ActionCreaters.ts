@@ -30,6 +30,17 @@ export const setLevelAndPage = createAsyncThunk(
   },
 )
 
+export const getWords = createAsyncThunk('levelWords/setLevelAndPage', async (query: { group: number | null; page: number }, { rejectWithValue }) => {
+  try {
+    const { page = 0, group = 0 } = query
+    const response = await axios.get<IWord[]>(`https://rs-lang-back-diffickmenlogo.herokuapp.com/allWords?group=${group}&page=${page}`)
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    return rejectWithValue('Error')
+  }
+})
+
 // export const postStats = createAsyncThunk('levelWords/postStats', async (settings: ISettings, { rejectWithValue }) => {
 //   // const dispatch = useDispatch()
 //   // const setStatistics = userSlice.actions.setStatistics

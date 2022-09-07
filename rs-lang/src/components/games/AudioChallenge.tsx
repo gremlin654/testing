@@ -3,8 +3,8 @@ import '../../style/AudioChallenge.scss'
 import { useAppSelector, useAppDispatch } from '../../hooks/redux'
 import { IWord } from '../../models/IWord'
 import { levelSlice } from '../../store/reducers/WordGroupSlice'
-import FailSound from '../../assets/sound/fail.mp3'
-import SuccessSound from '../../assets/sound/success.mp3'
+import FailSound from '../../assets/fail.mp3'
+import SuccessSound from '../../assets/success.mp3'
 import { createSound, toggleScreen } from './Sprint'
 import { GameResult } from './GameResult'
 import { Box, CircularProgress, LinearProgress } from '@mui/material'
@@ -48,8 +48,8 @@ export const AudioChallenge = () => {
   const gameBoard = useRef() as MutableRefObject<HTMLDivElement>
   const seriesContainer = useRef() as MutableRefObject<HTMLDivElement>
 
-  const audioSuccess = useMemo(() => createSound(SuccessSound, soundVolume), [soundVolume])
-  const audioFail = useMemo(() => createSound(FailSound, soundVolume), [soundVolume])
+  const audioSuccess = useMemo(() => createSound('./audio/success.mp3', soundVolume), [soundVolume])
+  const audioFail = useMemo(() => createSound('./audio/fail.mp3', soundVolume), [soundVolume])
   const audioWord = useMemo(
     () => createSound(`https://rs-lang-back-diffickmenlogo.herokuapp.com/${currentWord.audio}`, wordVolume),
     [wordVolume, currentWord],

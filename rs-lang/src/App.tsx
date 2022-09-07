@@ -27,7 +27,7 @@ function App() {
         <Route path='/games/sprint' element={<Sprint />} />
         <Route path='/games/audio_chalenge' element={<AudioChallenge />} />
         <Route path='/book' element={<BookContainer />} />
-        <Route path='/book/difficult' element={<Difficult/>} />
+        <Route path='/book/difficult' element={<Difficult />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/profile' element={<Profile />} />

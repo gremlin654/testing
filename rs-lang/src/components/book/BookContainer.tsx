@@ -17,17 +17,16 @@ import { userSlice } from '../../store/reducers/UserSlice'
 import { isUndefined } from 'util'
 import { getRandomNumber } from '../games/Games'
 
-
-const localPage = localStorage.getItem('page') || '0';
-const localGroup = localStorage.getItem('group') || '0';
+const localPage = localStorage.getItem('page') || '0'
+const localGroup = localStorage.getItem('group') || '0'
 export const BookContainer = () => {
   const dispatch = useAppDispatch()
-  // Number(localPage) !== 0 ? Number(localStorage.getItem('page')) : 
+  // Number(localPage) !== 0 ? Number(localStorage.getItem('page')) :
   // Number(localGroup) !== 0 ? Number(localStorage.getItem('group')) :
-  const page = useAppSelector((state) => state.wordSlice.page) as number;
-  const group = useAppSelector((state) => state.wordSlice.group) as number;
-  const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-  const groups = [1,2,3,4,5,6];
+  const page = useAppSelector((state) => state.wordSlice.page) as number
+  const group = useAppSelector((state) => state.wordSlice.group) as number
+  const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+  const groups = [1, 2, 3, 4, 5, 6]
 
   const setUserWords = wordSliceUser.actions.getUserWords
   const setPage = wordSlice.actions.setPage
@@ -36,10 +35,9 @@ export const BookContainer = () => {
   // const { words, isLoading } = useAppSelector((state) => state.levelSlice)
   const user = useAppSelector((state) => state.userSlice) as IFullUser
   const [arr, setArr] = useState([])
-  const [render, setRender] = useState(false);
-  const addWords = userSlice.actions.addUserWords;
-  const [loading, setLoading] = useState(false);
-
+  const [render, setRender] = useState(false)
+  const addWords = userSlice.actions.addUserWords
+  const [loading, setLoading] = useState(false)
 
   // useEffect(() => {
   //   dispatch(setLevelAndPage({ group, page }))
@@ -49,46 +47,49 @@ export const BookContainer = () => {
   //   dispatch(setLevelAndPage({ group, page }))
   // }, [page, group])
 
-  const uploadWordsUser: any = useCallback(async (object: {wordId: string, name: string, value: string, wordName: string}, token: string) => {
-    setLoading(true);
-        console.log(loading);
-    try{
-        const res = await fetch('https://rs-lang-back-diffickmenlogo.herokuapp.com/updateWord', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${user.token}`,
-            },
-            body: JSON.stringify(object),
-        })
-        const data = await res.json();
-        console.log(data);
-        dispatch(addWords(data.userWords))
-        const arrUser: any = words?.map((word) => {
-          const foundWord = data.userWords.find((wordUser: any) => `${wordUser._id}` === `${word._id}`)
-          if (foundWord) {
-            return (word = {
-              ...word,
-              deleted: foundWord.deleted,
-              difficult: foundWord.difficult,
-              correct: foundWord.correct,
-              fail: foundWord.fail,
-            })
-          }
+  const uploadWordsUser: any = useCallback(async (object: { wordId: string; name: string; value: string; wordName: string }, token: string) => {
+    setLoading(true)
+    console.log(loading)
+    try {
+      const res = await fetch('https://rs-lang-back-diffickmenlogo.herokuapp.com/updateWord', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(object),
+      })
+      const data = await res.json()
+      console.log(data)
+      dispatch(addWords(data.userWords))
+      const arrUser: any = words?.map((word) => {
+        const foundWord = data.userWords.find((wordUser: any) => `${wordUser._id}` === `${word._id}`)
+        if (foundWord) {
           return (word = {
             ...word,
-            correct: 0,
-            fail: 0,
+            deleted: foundWord.deleted,
+            difficult: foundWord.difficult,
+            correct: foundWord.correct,
+            fail: foundWord.fail,
           })
+        }
+        return (word = {
+          ...word,
+          correct: 0,
+          fail: 0,
         })
-        setArr(arrUser)
-    }catch(error){
-        setLoading(false);
-        console.log(error);
+      })
+      setArr(arrUser)
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
     }
-    setTimeout(() => {setLoading(false); console.log(loading)});
-  }, []);
+    setTimeout(() => {
+      setLoading(false)
+      console.log(loading)
+    })
+  }, [])
   // loading, setLoading
   // useEffect(() => {
   //   console.log(loading);
@@ -115,7 +116,7 @@ export const BookContainer = () => {
       })
       setArr(arrUser)
     } else {
-      const wordsRed: any = words;
+      const wordsRed: any = words
       setArr(wordsRed)
     }
     // console.log(arrUser)
@@ -135,13 +136,15 @@ export const BookContainer = () => {
         </button>
       </div>
       <div className={user.token ? 'btn-difficult-con' : 'btn-difficult-block'}>
-        <Link to='/book/difficult' className={user.settings.difficultWord ? 'btn-difficult' : 'btn-difficult-block'}>Сложные слова</Link>
+        <Link to='/book/difficult' className={user.settings.difficultWord ? 'btn-difficult' : 'btn-difficult-block'}>
+          Сложные слова
+        </Link>
       </div>
-          {isLoading && <h1>Loading...</h1> }
+      {isLoading && <h1>Loading...</h1>}
       {/* <div>
         <Link to='/book/level'>Level A1</Link>
       </div> */}
-        {/* <ButtonGroup variant='contained' aria-label='outlined primary button group'>
+      {/* <ButtonGroup variant='contained' aria-label='outlined primary button group'>
           <Button
             onClick={() => {
               dispatch(setGroup(0))
@@ -186,7 +189,7 @@ export const BookContainer = () => {
           </Button>
         </ButtonGroup> */}
       <div className='group-container'>
-      {groups.map((el, index) => (
+        {groups.map((el, index) => (
           <span
             key={index}
             className={group == index ? 'current-group' : 'group'}
@@ -198,7 +201,12 @@ export const BookContainer = () => {
           </span>
         ))}
       </div>
-      <div className='words-wrapper'>{arr && arr.map((word: IWord) => <Book key={word._id} word={word} arr={arr} render={render} setRender={setRender} uploadWordsUser={uploadWordsUser}/>)}</div>
+      <div className='words-wrapper'>
+        {arr &&
+          arr.map((word: IWord) => (
+            <Book key={word._id} word={word} arr={arr} render={render} setRender={setRender} uploadWordsUser={uploadWordsUser} />
+          ))}
+      </div>
       <div className='pages'>
         {pages.map((el, index) => (
           <span

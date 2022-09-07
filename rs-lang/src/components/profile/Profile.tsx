@@ -181,8 +181,8 @@ export function Profile() {
         userEmail: '',
         avatarURL: '',
         settings: {
-          soundVolume: 0,
-          musicVolume: 0,
+          soundVolume: 50,
+          musicVolume: 50,
           wordVolume: 50,
           difficultWord: true,
           deleteWord: true,
