@@ -252,7 +252,15 @@ export const Sprint = () => {
               <ArrowBackIosNewIcon className='game-sprint__btn-back' />
             </Link>
             <RoundTimer seconds={seconds} />
-            <CardContent sx={{ backgroundColor: 'rgba(233, 214, 255, 0.8235294118)', width: '90%' }}>
+            <CardContent
+              sx={{
+                backgroundColor: 'rgba(233, 214, 255, 0.8235294118)',
+                width: '90%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
               <h4 className='game-sprint__word-en'>{currentWord.word || ''}</h4>
               <h4 className='game-sprint__word-rus'>{currentRussianWord || ''}</h4>
             </CardContent>
