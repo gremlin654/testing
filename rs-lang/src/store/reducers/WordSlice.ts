@@ -9,7 +9,7 @@ const initialState: IWordState = {
   page: 0,
   group: 0,
   perPage: 29,
-  totalCount: 20
+  totalCount: 20,
 }
 
 export const wordSlice = createSlice({
@@ -17,12 +17,10 @@ export const wordSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state: IWordState, action: PayloadAction<number>) => {
-      state.page = action.payload;
-      localStorage.setItem('page', JSON.stringify(state.page))
+      state.page = action.payload
     },
     setGroup: (state: IWordState, action: PayloadAction<number>) => {
-      state.group = action.payload;
-      localStorage.setItem('group', JSON.stringify(state.group))
+      state.group = action.payload
     },
   },
   extraReducers: {
@@ -30,7 +28,7 @@ export const wordSlice = createSlice({
       state.words = action.payload
       state.isLoading = false
       state.error = ''
-      state.totalCount = 10;
+      state.totalCount = 10
     },
     [fetchWords.pending.type]: (state) => {
       state.isLoading = true

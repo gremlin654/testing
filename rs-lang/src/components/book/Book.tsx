@@ -110,7 +110,7 @@ export const Book = ({ word, arr, render, setRender, uploadWordsUser }: ElItemPr
       <Card sx={{ height: '500px' }}>
         <CardMedia component='img' height='140' image={`https://rs-lang-back-diffickmenlogo.herokuapp.com/${word.image}`} alt='green iguana' />
         {user.token ? (
-          <div className={learn === true || word.correct === 3 ? 'learn-true' : 'learn-false'}>
+          <div className={learn === true || word.correct >= 3 ? 'learn-true' : 'learn-false'}>
             Правильно: {word.correct} <br />
             Ошибок: {word.fail}
           </div>
@@ -141,7 +141,7 @@ export const Book = ({ word, arr, render, setRender, uploadWordsUser }: ElItemPr
                 data-word-name={word.word}
                 id={word._id}
                 value='true'
-                className={word.correct === 0 ? 'bg-true' : 'bg-false'}
+                className={word.correct <= 2 ? 'bg-true' : 'bg-false'}
               >
                 Изучено
               </button>
@@ -151,7 +151,7 @@ export const Book = ({ word, arr, render, setRender, uploadWordsUser }: ElItemPr
                 data-word-name={word.word}
                 id={word._id}
                 value='true'
-                className={learn === true || word.correct === 3 ? 'learn-true-btn' : 'learn-false-btn'}
+                className={learn === true || word.correct >= 3 ? 'learn-true-btn' : 'learn-false-btn'}
               >
                 Удалить слово из изучено
               </button>
@@ -163,7 +163,7 @@ export const Book = ({ word, arr, render, setRender, uploadWordsUser }: ElItemPr
 
         <div></div>
         {/* className={word.correct === 3 || learn === true ? 'bg-card-color' : 'bg-card'} */}
-        <CardContent className={word.correct === 3 ? 'bg-card-color' : 'bg-card'}>
+        <CardContent className={word.correct >= 3 ? 'bg-card-color' : 'bg-card'}>
           <Typography gutterBottom variant='h5' component='div'>
             {word.word}/ {word.transcription}
             <Sound

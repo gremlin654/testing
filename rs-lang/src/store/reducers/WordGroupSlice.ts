@@ -45,6 +45,9 @@ export const levelSlice = createSlice({
     setFooterOf(state, action) {
       state.footerOf = action.payload
     },
+    setBookWords(state, action) {
+      state.words = action.payload
+    },
   },
   extraReducers: {
     [setLevelAndPage.fulfilled.type]: (state, action) => {

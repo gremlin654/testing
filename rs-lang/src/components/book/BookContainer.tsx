@@ -16,9 +16,8 @@ import { setLevelAndPage } from '../../store/reducers/ActionCreaters'
 import { userSlice } from '../../store/reducers/UserSlice'
 import { isUndefined } from 'util'
 import { getRandomNumber } from '../games/Games'
+import { levelSlice } from '../../store/reducers/WordGroupSlice'
 
-const localPage = localStorage.getItem('page') || '0'
-const localGroup = localStorage.getItem('group') || '0'
 export const BookContainer = () => {
   const dispatch = useAppDispatch()
   // Number(localPage) !== 0 ? Number(localStorage.getItem('page')) :
@@ -28,6 +27,7 @@ export const BookContainer = () => {
   const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
   const groups = [1, 2, 3, 4, 5, 6]
 
+  const { setDifficultWords } = levelSlice.actions
   const setUserWords = wordSliceUser.actions.getUserWords
   const setPage = wordSlice.actions.setPage
   const setGroup = wordSlice.actions.setGroup
@@ -38,6 +38,8 @@ export const BookContainer = () => {
   const [render, setRender] = useState(false)
   const addWords = userSlice.actions.addUserWords
   const [loading, setLoading] = useState(false)
+  const [notLearnWords, setNotLearnWords] = useState([])
+  const [arrGet, setArrGet] = useState(false)
 
   // useEffect(() => {
   //   dispatch(setLevelAndPage({ group, page }))
@@ -90,7 +92,7 @@ export const BookContainer = () => {
       console.log(loading)
     })
   }, [])
-  // loading, setLoading
+
   // useEffect(() => {
   //   console.log(loading);
   // },[loading])
@@ -115,17 +117,29 @@ export const BookContainer = () => {
         })
       })
       setArr(arrUser)
+      setArrGet((prev) => !prev)
     } else {
       const wordsRed: any = words
       setArr(wordsRed)
+      setArrGet((prev) => !prev)
     }
-    // console.log(arrUser)
   }, [words])
+
+  useEffect(() => {
+    if (user.token && arr !== undefined && arr.length) {
+      const filterArr: any = arr.filter((word: any) => word.correct < 3)
+      setNotLearnWords(filterArr)
+    } else if (!user.token && arr !== undefined) {
+      setNotLearnWords(arr)
+    }
+  }, [arrGet])
+  console.log(notLearnWords)
+
   return (
     <div className='wrapper'>
       <div className='game-btn__container'>
         <button className='game__btn'>
-          <Link to='/games/sprint' onClick={() => dispatch(setLevelAndPage({ group, page }))}>
+          <Link to='/games/sprint' onClick={() => dispatch(setDifficultWords(notLearnWords))}>
             Спринт
           </Link>
         </button>

@@ -32,7 +32,7 @@ export const Difficult = () => {
   getWordsUser()
   const wordsUser = user.userWords
   useEffect(() => {
-    const resWords: any = wordsUser.filter((word: any) => word.fail === 1 || word.difficult === true || word.correct < 5)
+    const resWords: any = wordsUser.filter((word: any) => word.fail === 1 || word.difficult === true)
     setFilter(resWords)
   }, [wordsUser])
   // console.log(filter);
