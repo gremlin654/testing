@@ -11,6 +11,7 @@ import { IUserStatistics } from '../../models/IUser'
 export function Statistics() {
   const [statsNow, setStatsNow] = useState('num')
   const userStatistics = useAppSelector((state) => state.userSlice.statistics) as IUserStatistics
+  const userWords = useAppSelector((state) => state.userSlice.userWords)
 
   return (
     <div className='statistics'>
@@ -47,7 +48,7 @@ export function Statistics() {
           Графики
         </Button>
       </div>
-      {statsNow === 'num' ? <StatsNum userStatistics={userStatistics} /> : <StatsGraph userStatistics={userStatistics} />}
+      {statsNow === 'num' ? <StatsNum userStatistics={userStatistics} userWords={userWords} /> : <StatsGraph userStatistics={userStatistics} />}
     </div>
   )
 }

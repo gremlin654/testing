@@ -28,7 +28,7 @@ const keyCode = {
 export const AudioChallenge = () => {
   const { soundVolume, wordVolume } = useAppSelector((state) => state.userSlice.settings)
   const { words, isLoading } = useAppSelector((state) => state.levelSlice)
-  const { setLevel, setActiveWords } = levelSlice.actions
+  const { setLevel, setActiveWords, setFooterOf } = levelSlice.actions
   const dispatch = useAppDispatch()
 
   const [endGame, setEndGame] = useState<boolean>(false)
@@ -58,6 +58,7 @@ export const AudioChallenge = () => {
   const playWords = useCallback(async () => {
     setWordsArray(words)
     Howler.mute(false)
+    dispatch(setFooterOf(1))
     setTimeout(() => {
       setBlock(false)
     }, 200)
@@ -222,7 +223,7 @@ export const AudioChallenge = () => {
           ) : (
             <FullscreenIcon className='game-audio__btn-fullscreen' onClick={() => goFullScreen(gameBoard.current)} />
           )}
-          <Link to='/games'>
+          <Link to='/games' onClick={() => dispatch(setFooterOf(null))}>
             <ArrowBackIosNewIcon className='game-audio__btn-back' />
           </Link>
           <LifesInGame lifes={lifes} />

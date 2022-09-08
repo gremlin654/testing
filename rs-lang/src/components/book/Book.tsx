@@ -109,62 +109,58 @@ export const Book = ({ word, arr, render, setRender, uploadWordsUser }: ElItemPr
     <div>
       <Card sx={{ height: '500px' }}>
         <CardMedia component='img' height='140' image={`https://rs-lang-back-diffickmenlogo.herokuapp.com/${word.image}`} alt='green iguana' />
-        <div className={learn === true || word.correct === 3 ? 'learn-true' : 'learn-false'}>
-          Правильно: {word.correct} <br />
-          Ошибок: {word.fail}
-        </div>
-        <CardActions>
-          {/* {difficult ?  <button onClick={updateWord} data-name="deleted"
-                                        data-word-name={word.word}
-                                        id={word._id}
-                                        value={`${difficult}`}>
-            <Star width='40px' height='40px' ></Star>
-          </button> 
-              : 
-            <button onClick={updateWord} data-name="difficult"
-                                        data-word-name={word.word}
-                                        id={word._id}
-                                        value={`${difficult}`}>
-            <Star width='40px' height='40px' ></Star>
-          </button>} */}
-          <button
-            onClick={updateWord}
-            data-name='difficult'
-            data-word-name={word.word}
-            id={word._id}
-            value={`${difficult}`}
-            className={user.settings.difficultWord ? 'star-block' : 'star-none'}
-          >
-            <Star
-              width='40px'
-              height='40px'
-              fill={word.difficult === true || word.fail === 1 || color === 'yellow' ? 'yellow' : '#000'}
-              className={user.settings.difficultWord ? 'star-block' : 'star-none'}
-            ></Star>
-          </button>
-          <div>
+        {user.token ? (
+          <div className={learn === true || word.correct === 3 ? 'learn-true' : 'learn-false'}>
+            Правильно: {word.correct} <br />
+            Ошибок: {word.fail}
+          </div>
+        ) : (
+          ''
+        )}
+        {user.token ? (
+          <CardActions>
             <button
-              onClick={updateWordLearn}
+              onClick={updateWord}
               data-name='difficult'
               data-word-name={word.word}
               id={word._id}
-              value='true'
-              className={word.correct === 0 ? 'bg-true' : 'bg-false'}
+              value={`${difficult}`}
+              className={user.settings.difficultWord ? 'star-block' : 'star-none'}
             >
-              Изучено
+              <Star
+                width='40px'
+                height='40px'
+                fill={word.difficult === true || word.fail === 1 || color === 'yellow' ? 'yellow' : '#000'}
+                className={user.settings.difficultWord ? 'star-block' : 'star-none'}
+              ></Star>
             </button>
-            <button
-              onClick={updateWordDel}
-              data-name='deleted'
-              data-word-name={word.word}
-              id={word._id}
-              value='true'
-              className={learn === true || word.correct === 3 ? 'learn-true-btn' : 'learn-false-btn'}
-            >
-              Удалить слово из изучено
-            </button>
-          </div>
-        </CardActions>
+            <div>
+              <button
+                onClick={updateWordLearn}
+                data-name='difficult'
+                data-word-name={word.word}
+                id={word._id}
+                value='true'
+                className={word.correct === 0 ? 'bg-true' : 'bg-false'}
+              >
+                Изучено
+              </button>
+              <button
+                onClick={updateWordDel}
+                data-name='deleted'
+                data-word-name={word.word}
+                id={word._id}
+                value='true'
+                className={learn === true || word.correct === 3 ? 'learn-true-btn' : 'learn-false-btn'}
+              >
+                Удалить слово из изучено
+              </button>
+            </div>
+          </CardActions>
+        ) : (
+          ''
+        )}
+
         <div></div>
         {/* className={word.correct === 3 || learn === true ? 'bg-card-color' : 'bg-card'} */}
         <CardContent className={word.correct === 3 ? 'bg-card-color' : 'bg-card'}>

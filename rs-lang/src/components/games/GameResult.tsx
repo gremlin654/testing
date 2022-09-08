@@ -8,6 +8,7 @@ import { GameResultRow } from './GameResultRow'
 import { Link } from 'react-router-dom'
 import { IFullUser } from '../../models/IUser'
 import { userSlice } from '../../store/reducers/UserSlice'
+import { levelSlice } from '../../store/reducers/WordGroupSlice'
 
 interface IGameStats {
   allSeries: number[]
@@ -32,8 +33,9 @@ function getMaxOfArray(numArray: number[]) {
 
 export const GameResult = ({ allSeries, correctAnswers, failAnswers, lifes, gameName, score }: IGameStats) => {
   const user = useAppSelector((state) => state.userSlice) as IFullUser
-  const dispatch = useAppDispatch()
+  const { setFooterOf } = levelSlice.actions
   const setStatistics = userSlice.actions.setStatistics
+  const dispatch = useAppDispatch()
 
   const postStats = useCallback(async (settings: ISettings) => {
     try {
@@ -133,7 +135,9 @@ export const GameResult = ({ allSeries, correctAnswers, failAnswers, lifes, game
             },
           }}
         >
-          <Link to='/games/'>Выбор игры</Link>
+          <Link to='/games/' onClick={() => dispatch(setFooterOf(null))}>
+            Выбор игры
+          </Link>
         </Button>
       </Box>
     </div>

@@ -7,6 +7,7 @@ const initialState: IWordGroupState = {
   isLoading: false,
   error: '',
   level: null,
+  footerOf: null,
   userData: {
     userName: '',
     userId: '',
@@ -40,6 +41,9 @@ export const levelSlice = createSlice({
     },
     setDifficultWords(state, action) {
       state.words = action.payload
+    },
+    setFooterOf(state, action) {
+      state.footerOf = action.payload
     },
   },
   extraReducers: {

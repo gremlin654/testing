@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../hooks/redux'
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
 import '../style/Header.scss'
 import { Avatar } from '@mui/material'
 import { IFullUser } from '../models/IUser'
+import { levelSlice } from '../store/reducers/WordGroupSlice'
 
 export default function Header() {
   const user = useAppSelector((state) => state.userSlice) as IFullUser
+  const { setFooterOf } = levelSlice.actions
+  const dispatch = useAppDispatch()
 
   return (
     <header>
@@ -18,38 +21,50 @@ export default function Header() {
           <nav className='header_nav'>
             <ul className='header-nav_list'>
               <li>
-                <Link to='/'>Главная</Link>
+                <Link to='/' onClick={() => dispatch(setFooterOf(null))}>
+                  Главная
+                </Link>
               </li>
               <li>
-                <Link to='/book'>Учебник</Link>
+                <Link to='/book' onClick={() => dispatch(setFooterOf(null))}>
+                  Учебник
+                </Link>
               </li>
               <li>
-                <Link to='/games'>Мини-игры</Link>
+                <Link to='/games' onClick={() => dispatch(setFooterOf(null))}>
+                  Мини-игры
+                </Link>
               </li>
               {user.token ? (
                 <li>
-                  <Link to='/statistics'>Статитика</Link>
+                  <Link to='/statistics' onClick={() => dispatch(setFooterOf(null))}>
+                    Статитика
+                  </Link>
                 </li>
               ) : (
                 ''
               )}
 
               <li>
-                <Link to='/profile'>Настройки</Link>
+                <Link to='/profile' onClick={() => dispatch(setFooterOf(null))}>
+                  Настройки
+                </Link>
               </li>
               <li>
-                <Link to='/about'>О команде</Link>
+                <Link to='/about' onClick={() => dispatch(setFooterOf(null))}>
+                  О команде
+                </Link>
               </li>
             </ul>
           </nav>
           <div className='header__btn'>
             {user.userId !== '' ? (
-              <Link to='/profile' className='profile__icon'>
+              <Link to='/profile' className='profile__icon' onClick={() => dispatch(setFooterOf(null))}>
                 <Avatar src={user.avatarURL} sx={{ width: 50, height: 50 }} color='primary' />
               </Link>
             ) : (
               <button className='btn'>
-                <Link to='/signin'>
+                <Link to='/signin' onClick={() => dispatch(setFooterOf(null))}>
                   <p>Войти</p>
                 </Link>
               </button>

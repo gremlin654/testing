@@ -36,11 +36,11 @@ export interface IUserWord {
     textExampleTranslate: string
     textMeaningTranslate: string
     wordTranslate: string
-  }, 
-  difficult: boolean,
-	deleted: boolean,
-	correct: number,
-	fail: number,
+  }
+  difficult: boolean
+  deleted: boolean
+  correct: number
+  fail: number
 }
 
 export interface IWordState {
@@ -58,6 +58,7 @@ export interface IWordGroupState {
   isLoading: boolean
   error: string
   level: null | number
+  footerOf: null | number
   userData: {
     userName: string
     userId: string

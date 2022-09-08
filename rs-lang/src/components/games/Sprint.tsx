@@ -38,7 +38,7 @@ const initialObject = {} as IWord
 export const Sprint = () => {
   const { soundVolume, wordVolume, musicVolume } = useAppSelector((state) => state.userSlice.settings)
   const { words, isLoading } = useAppSelector((state) => state.levelSlice)
-  const { setLevel, setActiveWords } = levelSlice.actions
+  const { setLevel, setActiveWords, setFooterOf } = levelSlice.actions
   const dispatch = useAppDispatch()
 
   const [endGame, setEndGame] = useState<boolean>(false)
@@ -68,6 +68,7 @@ export const Sprint = () => {
   const audioFon = useMemo(() => createSound('./audio/fon.mp3', musicVolume * 0.1, 1, true), [musicVolume])
 
   const playWords = useCallback(() => {
+    dispatch(setFooterOf(1))
     setWordsArray(words)
   }, [words])
 
@@ -247,7 +248,7 @@ export const Sprint = () => {
             ) : (
               <FullscreenIcon className='game-sprint__btn-fullscreen' onClick={() => goFullScreen(gameBoard.current)} />
             )}
-            <Link to='/games'>
+            <Link to='/games' onClick={() => dispatch(setFooterOf(null))}>
               <ArrowBackIosNewIcon className='game-sprint__btn-back' />
             </Link>
             <RoundTimer seconds={seconds} />

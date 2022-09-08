@@ -1,10 +1,17 @@
 import { IUserStatistics } from '../../models/IUser'
 import '../../style/stats/StatsNum.scss'
 
-export function StatsNum({ userStatistics }: { userStatistics: IUserStatistics }) {
+export function StatsNum({ userStatistics, userWords }: { userStatistics: IUserStatistics; userWords: any }) {
   const { games } = userStatistics
   return (
     <div className='statistics-content'>
+      <h3>Новые слова</h3>
+      <div className='statistics-content__table-down'>
+        <div className='statistics-content__table-down-item'>
+          <div className='statistics-content__table-down-item-title'>Всего новых слов:</div>
+          <div className='statistics-content__table-down-item-title'>{`${userWords.length}`}</div>
+        </div>
+      </div>
       <h3>Успехи в играх</h3>
       <div className='statistics-content__table'>
         <div className='statistics-content__table-item'>

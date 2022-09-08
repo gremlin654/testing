@@ -16,10 +16,12 @@ import { Profile } from './components/profile/Profile'
 import { Difficult } from './components/book/Difficult'
 import { Statistics } from './components/stats/Statistics'
 import { About } from './components/about/About'
+import { useAppSelector } from './hooks/redux'
 
 function App() {
+  const { footerOf } = useAppSelector((state) => state.levelSlice)
   return (
-    <div className='App'>
+    <div className={footerOf === null ? 'App' : 'App-games'}>
       <Header />
       <Routes>
         <Route path='/' element={<Main />} />
@@ -34,7 +36,7 @@ function App() {
         <Route path='/statistics' element={<Statistics />} />
         <Route path='/about' element={<About />} />
       </Routes>
-      <Footer />
+      {footerOf === null ? <Footer /> : ''}
     </div>
   )
 }

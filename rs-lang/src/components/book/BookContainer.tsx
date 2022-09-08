@@ -141,53 +141,6 @@ export const BookContainer = () => {
         </Link>
       </div>
       {isLoading && <h1>Loading...</h1>}
-      {/* <div>
-        <Link to='/book/level'>Level A1</Link>
-      </div> */}
-      {/* <ButtonGroup variant='contained' aria-label='outlined primary button group'>
-          <Button
-            onClick={() => {
-              dispatch(setGroup(0))
-            }}
-          >
-            Beginner(A1)
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(setGroup(1))
-            }}
-          >
-            Pre-Intermediate(A2)
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(setGroup(2))
-            }}
-          >
-            Intermediate(B1)
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(setGroup(3))
-            }}
-          >
-            Upper-Intermediate(B2)
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(setGroup(4))
-            }}
-          >
-            Advanced(C1)
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(setGroup(5))
-            }}
-          >
-            Mastery(C2)
-          </Button>
-        </ButtonGroup> */}
       <div className='group-container'>
         {groups.map((el, index) => (
           <span
@@ -201,7 +154,23 @@ export const BookContainer = () => {
           </span>
         ))}
       </div>
-      <div className='words-wrapper'>
+      <div
+        className={`words-wrapper ${
+          group === 0
+            ? 'group-0'
+            : group === 1
+            ? 'group-1'
+            : group === 2
+            ? 'group-2'
+            : group === 3
+            ? 'group-3'
+            : group === 4
+            ? 'group-4'
+            : group === 5
+            ? 'group-5'
+            : ''
+        }`}
+      >
         {arr &&
           arr.map((word: IWord) => (
             <Book key={word._id} word={word} arr={arr} render={render} setRender={setRender} uploadWordsUser={uploadWordsUser} />

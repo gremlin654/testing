@@ -32,7 +32,7 @@ export const Difficult = () => {
   getWordsUser()
   const wordsUser = user.userWords
   useEffect(() => {
-    const resWords: any = wordsUser.filter((word: any) => word.fail === 1 || word.difficult === true)
+    const resWords: any = wordsUser.filter((word: any) => word.fail === 1 || word.difficult === true || word.correct < 5)
     setFilter(resWords)
   }, [wordsUser])
   // console.log(filter);
@@ -40,14 +40,22 @@ export const Difficult = () => {
     <div className='wrapper'>
       <div className='game-btn__container'>
         <button className='game__btn'>
-          <Link to='/games/sprint' onClick={() => dispatch(setDifficultWords(filter))}>
-            Спринт
-          </Link>
+          {filter.length ? (
+            <Link to='/games/sprint' onClick={() => dispatch(setDifficultWords(filter))}>
+              Спринт
+            </Link>
+          ) : (
+            'Спринт'
+          )}
         </button>
         <button className='game__btn'>
-          <Link to='/games/audio_chalenge' onClick={() => dispatch(setDifficultWords(filter))}>
-            Аудиовызов
-          </Link>
+          {filter.length ? (
+            <Link to='/games/audio_chalenge' onClick={() => dispatch(setDifficultWords(filter))}>
+              Аудиовызов
+            </Link>
+          ) : (
+            'Аудиовызов'
+          )}
         </button>
       </div>
       <h2>Сложные слова</h2>
