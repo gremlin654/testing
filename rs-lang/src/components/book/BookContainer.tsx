@@ -31,7 +31,8 @@ export const BookContainer = () => {
   const setUserWords = wordSliceUser.actions.getUserWords
   const setPage = wordSlice.actions.setPage
   const setGroup = wordSlice.actions.setGroup
-  const { data: words, error, isLoading } = postAPI.useGetWordsQuery({ page, group })
+  // const { data: words, error, isLoading } = postAPI.useGetWordsQuery({ page, group })
+  const { words, isLoading } = useAppSelector((state) => state.levelSlice)
   // const { words, isLoading } = useAppSelector((state) => state.levelSlice)
   const user = useAppSelector((state) => state.userSlice) as IFullUser
   const [arr, setArr] = useState([])
@@ -41,57 +42,53 @@ export const BookContainer = () => {
   const [notLearnWords, setNotLearnWords] = useState([])
   const [arrGet, setArrGet] = useState(false)
 
-  // useEffect(() => {
-  //   dispatch(setLevelAndPage({ group, page }))
-  // }, [])
+  useEffect(() => {
+    dispatch(setLevelAndPage({ group, page }))
+  }, [group, page])
 
   // useEffect(() => {
   //   dispatch(setLevelAndPage({ group, page }))
   // }, [page, group])
 
-  const uploadWordsUser: any = useCallback(async (object: { wordId: string; name: string; value: string; wordName: string }, token: string) => {
-    setLoading(true)
-    console.log(loading)
-    try {
-      const res = await fetch('https://rs-lang-back-diffickmenlogo.herokuapp.com/updateWord', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify(object),
-      })
-      const data = await res.json()
-      console.log(data)
-      dispatch(addWords(data.userWords))
-      const arrUser: any = words?.map((word) => {
-        const foundWord = data.userWords.find((wordUser: any) => `${wordUser._id}` === `${word._id}`)
-        if (foundWord) {
+  const uploadWordsUser: any = useCallback(
+    async (object: { wordId: string; name: string; value: string; wordName: string }, token: string) => {
+      try {
+        const res = await fetch('https://rs-lang-back-diffickmenlogo.herokuapp.com/updateWord', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify(object),
+        })
+        const data = await res.json()
+        console.log(data)
+        dispatch(addWords(data.userWords))
+        const arrUser: any = words?.map((word) => {
+          const foundWord = data.userWords.find((wordUser: any) => `${wordUser._id}` === `${word._id}`)
+          if (foundWord) {
+            return (word = {
+              ...word,
+              deleted: foundWord.deleted,
+              difficult: foundWord.difficult,
+              correct: foundWord.correct,
+              fail: foundWord.fail,
+            })
+          }
           return (word = {
             ...word,
-            deleted: foundWord.deleted,
-            difficult: foundWord.difficult,
-            correct: foundWord.correct,
-            fail: foundWord.fail,
+            correct: 0,
+            fail: 0,
           })
-        }
-        return (word = {
-          ...word,
-          correct: 0,
-          fail: 0,
         })
-      })
-      setArr(arrUser)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
-    setTimeout(() => {
-      setLoading(false)
-      console.log(loading)
-    })
-  }, [])
+        setArr(arrUser)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [words],
+  )
 
   // useEffect(() => {
   //   console.log(loading);
@@ -154,7 +151,7 @@ export const BookContainer = () => {
           Сложные слова
         </Link>
       </div>
-      {isLoading && <h1>Loading...</h1>}
+
       <div className='group-container'>
         {groups.map((el, index) => (
           <span
@@ -168,41 +165,47 @@ export const BookContainer = () => {
           </span>
         ))}
       </div>
-      <div
-        className={`words-wrapper ${
-          group === 0
-            ? 'group-0'
-            : group === 1
-            ? 'group-1'
-            : group === 2
-            ? 'group-2'
-            : group === 3
-            ? 'group-3'
-            : group === 4
-            ? 'group-4'
-            : group === 5
-            ? 'group-5'
-            : ''
-        }`}
-      >
-        {arr &&
-          arr.map((word: IWord) => (
-            <Book key={word._id} word={word} arr={arr} render={render} setRender={setRender} uploadWordsUser={uploadWordsUser} />
-          ))}
-      </div>
-      <div className='pages'>
-        {pages.map((el, index) => (
-          <span
-            key={index}
-            className={page == index ? 'current-page' : 'page'}
-            onClick={() => {
-              dispatch(setPage(index))
-            }}
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          <div
+            className={`words-wrapper ${
+              group === 0
+                ? 'group-0'
+                : group === 1
+                ? 'group-1'
+                : group === 2
+                ? 'group-2'
+                : group === 3
+                ? 'group-3'
+                : group === 4
+                ? 'group-4'
+                : group === 5
+                ? 'group-5'
+                : ''
+            }`}
           >
-            {el}
-          </span>
-        ))}
-      </div>
+            {arr &&
+              arr.map((word: IWord) => (
+                <Book key={word._id} word={word} arr={arr} render={render} setRender={setRender} uploadWordsUser={uploadWordsUser} />
+              ))}
+          </div>
+          <div className='pages'>
+            {pages.map((el, index) => (
+              <span
+                key={index}
+                className={page == index ? 'current-page' : 'page'}
+                onClick={() => {
+                  dispatch(setPage(index))
+                }}
+              >
+                {el}
+              </span>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
